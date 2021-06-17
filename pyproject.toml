@@ -1,0 +1,26 @@
+[project]
+name = "eventbrite_scraper"
+version = "0.1.0"
+description = "Scrape events from Eventbrite for a given city and state in the United States of America"
+authors = [
+    "Lorena Mesa <me@lorenamesa.com>"
+]
+license = "MIT"
+readme = "README.md"
+python = "^3.6"
+homepage = "https://github.com/lorenanicole/eventbrite_scraper"
+repository = "https://github.com/lorenanicole/eventbrite_scraper.git"
+documentation = "https://github.com/lorenanicole/eventbrite_scraper.git"
+
+keywords = ["web scraper", "eventbrite"]
+
+classifiers = [
+    "Topic :: Events",
+    "Topic :: Web Scraper",
+    "Topic :: Eventbrite"
+]
+
+[dependencies]
+beautifulsoup4 = "4.9.1"
+requests = "2.25.0"
+us = "2.0.2"

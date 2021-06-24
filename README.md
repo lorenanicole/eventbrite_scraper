@@ -13,8 +13,6 @@ database as well as outputs the found events to stdout.
 To use, you will need to specify a category, a city, and a two letter USA state abbreviation. 
 
 For example: `python scraper.py jazz chicago il`.
-If you'd like to specify the number of events (in multiples of 20), you can add an optional `-n` parameter:
-`python scraper.py jazz chicago il -n 40`.
 
 Example:
 
@@ -42,15 +40,36 @@ $ python scraper.py jazz chicago il
 20. Saxophonist Isaiah Collier & The Chosen FewSaxophonist Isaiah Collier & The Chosen Few on Fri, June 25, 2021 8:00 PM – 9:30 PM CDT, event page: https://www.eventbrite.com/e/saxophonist-isaiah-collier-the-chosen-few-tickets-156573207679?aff=ebdssbdestsearch
 ```
 
-If you'd like to output the data into a MySQL database use the `-d` flag,  for example: `python scraper.py jazz chicago il -d mysql`.
+**Optional Parameters**
+
+- *number* - You can specify the number of events (in multiples of 20) -- 20 is the default -- with the optional `-n` parameter: `python scraper.py jazz chicago il -n 40`.
+- *database* - You can specify the database -- `sqlite` or `mysql`, set to `sqlite` as default -- with the optional `-d` parameter: `python scraper.py jazz chicago il -d mysql`.
 
 If you need help on the usage run: `python scraper.py -h`.
 
-You can query the data with the sqlite3 command line utility:
+### Using a MySQL database
+
+To use MySQL you'll need to create a `.env` file that has the following values: `DATABASE_USER` and `DATABASE_PASSWORD`.
+For information on setting up MySQL you can read the docs [here](https://dev.mysql.com/doc/mysql-installer/en/).
+
+## Querying the data
+
+Depending on the database flavor you choose, you can can query the data with with the database flavor's command line utility:
+
+For example with `sqlite`:
 
 ```
 $ sqlite3
-> .open events.db
+> .open all_events.db
+> select count(*) from all_events;
+20
+```
+
+Or with `mysql`:
+
+```
+$ mysql -u USERNAME -p PASSWORD
+> use database all_events;
 > select count(*) from events;
 20
 ```

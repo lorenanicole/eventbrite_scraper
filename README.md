@@ -1,7 +1,7 @@
 # Eventbrite Scraper
 
-A Python 3+ scraper that pulls USA event data from Eventbrite. The data is persisted to an `events.db` sqlite3
-database as well as output to stdout upon retrieving the values.
+A Python 3+ scraper that pulls USA event data from Eventbrite. The data is persisted to an `events.db` sqlite3 or MySQL
+database as well as outputs the found events to stdout.
 
 ### Installation
 
@@ -41,6 +41,8 @@ $ python scraper.py jazz chicago il
 19. SSMA presents SENSES to SOUL School of MusicSSMA presents SENSES to SOUL School of Music on Fri, June 25, 2021 7:00 PM – 9:30 PM CDT, event page: https://www.eventbrite.com/e/ssma-presents-senses-to-soul-school-of-music-tickets-157527861073?aff=ebdssbdestsearch
 20. Saxophonist Isaiah Collier & The Chosen FewSaxophonist Isaiah Collier & The Chosen Few on Fri, June 25, 2021 8:00 PM – 9:30 PM CDT, event page: https://www.eventbrite.com/e/saxophonist-isaiah-collier-the-chosen-few-tickets-156573207679?aff=ebdssbdestsearch
 ```
+
+If you'd like to output the data into a MySQL database use the `-d` flag,  for example: `python scraper.py jazz chicago il -d mysql`.
 
 If you need help on the usage run: `python scraper.py -h`.
 

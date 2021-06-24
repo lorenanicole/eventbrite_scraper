@@ -20,13 +20,30 @@ class DatabaseMixin:
         raise NotImplementedError
 
     @abstractmethod
-    def insert(self, query, data):
+    def insert(self, data):
         raise NotImplementedError
 
 
 class SQLiteDatabase(DatabaseMixin):
     def __init__(self, *args,  **kwargs):
         self.connection = self.connect_to_database(kwargs.get("database_name"), kwargs.get("database_exist"))
+        self.event_table_schema = """CREATE TABLE events
+             (
+                [id] INTEGER PRIMARY KEY,
+                [url] text,
+                [title] text,
+                [date] text,
+                [time] text,
+                [venue] text,
+                [street_address] text,
+                [city] text,
+                [state] text,
+                [zipcode] int,
+                [map_url] text,
+                [price] text
+             )
+        """
+        self.create_tables(queries=[self.event_table_schema])
 
     def connect_to_database(self, database_name, database_exist):
         return sqlite3.connect(f"{SCRIPT_DIR}/{database_name}.db")
@@ -38,7 +55,13 @@ class SQLiteDatabase(DatabaseMixin):
 
         self.connection.commit()
 
-    def insert(self, query, data):
+    def insert(self, data):
+        query =  """
+        INSERT INTO `events`
+            (`url`, `title`, `date`, `time`, `venue`, `street_address`, 
+            `city`, `state`, `zipcode`, `map_url`, `price`)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """
         cursor = self.connection.cursor()
         cursor.executemany(query, data)
         self.connection.commit()
@@ -47,6 +70,23 @@ class SQLiteDatabase(DatabaseMixin):
 class MySQLDatabase(DatabaseMixin):
     def __init__(self, *args,  **kwargs):
         self.connection = self.connect_to_database(kwargs.get("database_name"), kwargs.get("database_exist"))
+        self.event_table_schema = """
+        CREATE TABLE `events` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `url` TEXT,
+            `title` TEXT,
+            `date` TEXT,
+            `time` TEXT,
+            `venue` TEXT,
+            `street_address` TEXT,
+            `city` TEXT,
+            `state` TEXT,
+            `zipcode` INT(11),
+            `map_url` TEXT,
+            `price` TEXT,
+            PRIMARY KEY (`id`)
+        )"""
+        self.create_tables(queries=[self.event_table_schema])
 
     def connect_to_database(self, database_name, database_exist=True):
         """
@@ -84,7 +124,6 @@ class MySQLDatabase(DatabaseMixin):
         :param queries:
         :return:
         """
-
         with self.connection.cursor() as cursor:
             for query in queries:
                 try:
@@ -100,7 +139,13 @@ class MySQLDatabase(DatabaseMixin):
 
             self.connection.commit()
 
-    def insert(self, query, data):
+    def insert(self, data):
+        query = """
+        INSERT INTO `events`
+            (`url`, `title`, `date`, `time`, `venue`, `street_address`, 
+            `city`, `state`, `zipcode`, `map_url`, `price`)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+
         with self.connection.cursor() as cursor:
             cursor.executemany(query, data)
             self.connection.commit()

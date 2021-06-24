@@ -58,34 +58,8 @@ if __name__ == "__main__":
     events = EventbriteScraper.get_events(args.state, args.city, args.category, args.number)
     event_tuples = list(map(lambda e: e.to_tuple(), events))
 
-    table_schema =  """
-    CREATE TABLE events
-             (
-                [id] INTEGER PRIMARY KEY,
-                [url] text,
-                [title] text,
-                [date] text,
-                [time] text,
-                [venue] text,
-                [street_address] text,
-                [city] text,
-                [state] text,
-                [zipcode] int,
-                [map_url] text,
-                [price] text
-             )
-    """
-
-    insert_events_query = """
-                        INSERT INTO `events`
-                            (`url`, `title`, `date`, `time`, `venue`, `street_address`, 
-                            `city`, `state`, `zipcode`, `map_url`, `price`)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """
-
-    db = DatabaseFactory.create_database(**{'database_exist': False, 'database': args.database,  'database_name': 'eventbrite_events'})
-    db.create_tables([table_schema])
-    db.insert(insert_events_query, event_tuples)
+    db = DatabaseFactory.create_database(**{'database_exist': True, 'database': args.database,  'database_name': 'all_events'})
+    db.insert(event_tuples)
 
     counter = 1
     for event in events:

@@ -1,7 +1,6 @@
 # Eventbrite Scraper
 
-A Python 3+ scraper that pulls USA event data from Eventbrite. The data is persisted to an `events.db` sqlite3 or MySQL
-database as well as outputs the found events to stdout.
+A Python 3+ scraper that pulls USA event data from Eventbrite. The data is persisted to a sqlite3 or MySQL database as well as outputs the found events to stdout.
 
 ### Installation
 

@@ -59,7 +59,7 @@ if __name__ == "__main__":
     event_tuples = list(map(lambda e: e.to_tuple(), events))
 
     db = DatabaseFactory.create_database(**{'database_exist': True, 'database': args.database,  'database_name': 'all_events'})
-    db.insert(event_tuples)
+    db.insert("events", event_tuples)
 
     counter = 1
     for event in events:

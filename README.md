@@ -47,7 +47,7 @@ $ python scraper.py jazz chicago il
 
 If you need help on the usage run: `python scraper.py -h`.
 
-### Using a MySQL database
+## Using a MySQL database
 
 To use MySQL you'll need to create a `.env` file that has the following values: `DATABASE_USER` and `DATABASE_PASSWORD`.
 For information on setting up MySQL you can read the docs [here](https://dev.mysql.com/doc/mysql-installer/en/).
